@@ -33,6 +33,9 @@ import java.util.Scanner;
 			
 			System.out.println("Nome: " + nome);
 			
+			leia.close();
+			
+			
 			
 		}
 
