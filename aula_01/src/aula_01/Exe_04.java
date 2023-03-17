@@ -15,7 +15,7 @@ public class Exe_04 {
 		System.out.println("Digite seu nome: ");
 		nome = leia.nextLine();
 		
-		System.out.println("Digite o seu primeira numero: ");
+		System.out.println("Digite o seu primeiro numero: ");
 		numero1 = leia.nextFloat();
 		
 		System.out.println("Digite o seu segundo numero: ");

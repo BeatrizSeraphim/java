@@ -27,7 +27,13 @@ import java.util.Scanner;
 			System.out.println("Soma: " + df.format((numero1 + numero2)));
 			System.out.println("Subtração: " + df.format((numero1 - numero2)));
 			System.out.println("Muktiplicação: " + df.format((numero1 * numero2)));
+			
+			if (numero2 != 0) {
 			System.out.println("Divisão: " + df.format((numero1 / numero2)));
+			}else {
+				System.out.println("Não existe divisão por zero!");
+			}
+			
 			System.out.println("Potência: " + df.format(Math.pow(numero1, numero2)));
 			System.out.println("Raíz Quadrada: " + df.format(Math.sqrt(numero1)));
 			
