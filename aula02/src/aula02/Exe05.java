@@ -51,7 +51,7 @@ public class Exe05 {
         	System.out.println("Suco de laranja.\n Total a pagar:" + (f * quant));
             break;	
         default:
-   System.out.println("Produto não encontrado");	
+   System.out.println("Produto não encontrado.");	
         
         	
 	    

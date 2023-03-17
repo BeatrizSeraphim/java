@@ -6,17 +6,18 @@ public class Exe02 {
 
 	public static void main(String[] args) {
 		Scanner leia = new Scanner(System.in);
-		int idade;
 
 		String nome, pergunta;
-
+		int idade;
 		boolean doacao = false;
 
-		System.out.println("Digite o Nome do Doador: ");
+		System.out.println("Digite o seu Nome: ");
 		nome = leia.nextLine();
-		System.out.println("Digite a Idade do Doador: ");
+
+		System.out.println("Digite a sua Idade: ");
 		idade = leia.nextInt();
-		System.out.println("Primeira doação de Sangue? (S/N): ");
+
+		System.out.println("Primeira doação? (S/N)");
 		leia.skip("\\R?");
 		pergunta = leia.nextLine().toUpperCase();
 
@@ -25,17 +26,13 @@ public class Exe02 {
 
 		if (idade >= 60 && idade <= 69) {
 			if (doacao)
-				System.out.println(nome + " você não está apto(a) para doar sangue!");
-			if (idade >= 60 && idade <= 69) {
-				System.out.println(nome + " você está apto(a) para doar sangue!");
-			}
+				System.out.println(nome + " não está apto(a) a doar!");
 			else
-				System.out.println(nome + " você não está apto(a) para doar sangue!");
+				System.out.println(nome + " está apto(a) a doar!");
 		} else if (idade < 18 || idade > 69)
-			System.out.println(" você não está apto(a) para doar sangue!");
-
-		else if (idade >= 18 && idade <= 59)
-			System.out.println(nome + " você está apto(a) para doar sangue!");
+			System.out.println(nome + " não está apto(a) a doar!");
+		else
+			System.out.println(nome + " está apto(a) a doar!");
 
 	}
 
