@@ -1,7 +1,10 @@
 package conta;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import conta.controller.ContaController;
 import conta.model.Conta;
 import conta.model.ContaCorrente;
 import conta.model.ContaPoupanca;
@@ -17,23 +20,15 @@ public class Menu {
 		String titular;
 		float saldo, limite, valor;
 		
-		
-		
-		ContaCorrente cc1 = new ContaCorrente(2, 123, 1, "Gabriel Machado", 100000.00f, 1000.00f);
-		cc1.visualizar();
-		
-		
-		ContaPoupanca cp1 = new ContaPoupanca(3, 123, 2, "Gabriel Machado", 100000.00f, 2);
-		cp1.visualizar();
-		
-		
+		ContaController contas = new ContaController();
+						
 		while (true) {
 
 			System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLACK_BACKGROUND
 					+ "*****************************************************");
 			System.out.println("                                                     ");
 			System.out.println("               BANCO SERAPHIM                        ");
-			System.out.println("                                                         ");
+			System.out.println("                                                     ");
 			System.out.println("*****************************************************");
 			System.out.println("                                                     ");
 			System.out.println("            1 - Criar Conta                          ");
@@ -50,9 +45,18 @@ public class Menu {
 			System.out.println("Entre com a opção desejada:                          ");
 			System.out.println("                                                     " + Cores.TEXT_RESET);
 
-			opcao = leia.nextInt();
-
+			try {
+				opcao = leia.nextInt();
+			}catch(InputMismatchException e) {
+				System.out.println("Digite valores inteiros!");
+				leia.nextLine();
+				opcao = 0;
+				
+			}
+			
+			
 			if (opcao == 9) {
+				System.out.println(Cores.TEXT_CYAN_BOLD + "Banco Seraphim agradece!");
 				sobre();
 				leia.close();
 				System.exit(0);
@@ -80,23 +84,34 @@ public class Menu {
 					System.out.println("Digite o Limite de Crédito (R$): ");
 					limite = leia.nextFloat();
 
-					// criar o objeto conta corrente
+					contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
+					
 				}
+				
 				case 2 -> {
 					System.out.println("Digite o dia do Aniversario da Conta: ");
 					aniversario = leia.nextInt();
 
-					// criar o objeto conta poupanca
+					contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
 				}
 				}
+				keyPress();
 			}
-
-			case 2 -> System.out.println("Listar todas as Contas\n\n");
+			
+			case 2 -> {
+				System.out.println("Listar todas as Contas\n\n"); 
+				contas.listarTodas();
+				keyPress();
+			}
 			case 3 -> {
 				System.out.println("Consultar dados da Conta - por número\n\n");
 
 				System.out.println("Digite o número da conta: ");
 				numero = leia.nextInt();
+				
+				contas.procurarPorNumero(numero);
+				
+				keyPress();
 			}
 			case 4 -> {
 				System.out.println("Atualizar Dados da Conta\n\n");
@@ -138,12 +153,14 @@ public class Menu {
 
 				// fim do condicional buscar na collection
 
+				keyPress();
 			}
 			case 5 -> {
 				System.out.println("Apagar a Conta\n\n");
 
 				System.out.println("Digite o número da conta: ");
 				numero = leia.nextInt();
+				keyPress();
 			}
 			case 6 -> {
 				System.out.println("Saque\n\n");
@@ -153,7 +170,9 @@ public class Menu {
 				
 				System.out.println("Digite o valor do Saque: ");
 				valor = leia.nextFloat();
+				keyPress();
 			}
+			
 			case 7 -> {
 				System.out.println("Depósito\n\n");
 
@@ -162,7 +181,9 @@ public class Menu {
 				
 				System.out.println("Digite o valor do Depósito: ");
 				valor = leia.nextFloat();
+				keyPress();
 			}
+			
 			case 8 -> {
 				System.out.println("Transferência entre Contas\n\n");
 				System.out.println("Digite o número da conta: ");
@@ -211,17 +232,19 @@ public class Menu {
 					System.out.println("Digite o Valor da Transferência (R$): ");
 					valor = leia.nextFloat();
 				} while (valor <= 0);
-
+				keyPress();
 			}
+
 			default -> System.out.println("\nOpção Inválida!\n");
 			}
 
 		}
 
 	}
-	
+
 	public static void sobre() {
-		System.out.println(Cores.TEXT_CYAN_BRIGHT + Cores.ANSI_BLACK_BACKGROUND + "                                                             ");
+		System.out.println(Cores.TEXT_CYAN_BRIGHT + Cores.ANSI_BLACK_BACKGROUND
+				+ "                                                             ");
 		System.out.println("       Banco Seraphim - O seu futuro começa aqui!            ");
 		System.out.println("                                                             ");
 		System.out.println("*************************************************************");
@@ -230,6 +253,16 @@ public class Menu {
 		System.out.println("           https://github.com/BeatrizSeraphim                ");
 		System.out.println("                                                             ");
 		System.out.println("*************************************************************" + Cores.TEXT_RESET);
+
+	}
+
+	public static void keyPress() {
 		
+		try {
+			System.out.println(Cores.TEXT_RESET + "Pressione a tecla enter para continuar...");
+			System.in.read();
+		}catch(IOException e) {
+			System.out.println("Erro de digitação!");
+		}
 	}
 }
